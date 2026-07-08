@@ -22,7 +22,7 @@ event.OnServerEvent:Connect(function(player, action, targetName, extra)
 		end
 		
 	elseif action == "Hell" then
-		-- CEHENNEM ÖZELLİĞİ: Haritadaki her şeye ateş ekler
+
 		for _, obj in pairs(workspace:GetDescendants()) do
 			if obj:IsA("BasePart") and not obj:IsDescendantOf(player.Character) then
 				local fire = Instance.new("Fire")
@@ -44,12 +44,11 @@ local BUTTON_COLOR = Color3.fromRGB(0, 120, 0)
 local ACCENT_GREEN = Color3.fromRGB(0, 255, 0)
 local HELL_COLOR = Color3.fromRGB(200, 0, 0) -- Cehennem butonu için kırmızımsı
 
--- UI PANEL OLUŞTURMA
 local screenGui = Instance.new("ScreenGui", player.PlayerGui)
 screenGui.Name = "ChaosPanelV3"
 
 local mainFrame = Instance.new("Frame", screenGui)
-mainFrame.Size = UDim2.new(0, 240, 0, 430) -- Boyut biraz daha büyüdü
+mainFrame.Size = UDim2.new(0, 240, 0, 430)
 mainFrame.Position = UDim2.new(0.05, 0, 0.15, 0)
 mainFrame.BackgroundColor3 = BACKGROUND_COLOR
 mainFrame.BorderSizePixel = 2
@@ -66,7 +65,7 @@ title.TextSize = 16
 title.Font = Enum.Font.Code
 title.BackgroundTransparency = 1
 
--- YARDIMCI BUTON FONKSİYONU
+
 local function createBtn(name, text, pos, color)
 	local btn = Instance.new("TextButton", mainFrame)
 	btn.Name = name
@@ -81,7 +80,7 @@ local function createBtn(name, text, pos, color)
 	return btn
 end
 
--- ÖZELLİKLERİ EKLE
+
 local flyBtn = createBtn("Fly", "Uçma: KAPALI", UDim2.new(0.5, -100, 0, 45))
 local noclipBtn = createBtn("Noclip", "Noclip: KAPALI", UDim2.new(0.5, -100, 0, 85))
 local espBtn = createBtn("ESP", "ESP: KAPALI", UDim2.new(0.5, -100, 0, 125))
@@ -106,22 +105,22 @@ Instance.new("UICorner", msgInput)
 
 local msgBtn = createBtn("Msg", "MESAJ GÖNDER", UDim2.new(0.5, -100, 0, 285))
 
--- AYIRICI ÇİZGİ
+
 local line = Instance.new("Frame", mainFrame)
 line.Size = UDim2.new(0.9, 0, 0, 2)
 line.Position = UDim2.new(0.05, 0, 0, 335)
 line.BackgroundColor3 = ACCENT_GREEN
 line.BorderSizePixel = 0
 
--- CEHENNEM BUTONU (ÖZEL)
+
 local hellBtn = createBtn("Hell", "CEHENNEM MODU", UDim2.new(0.5, -100, 0, 355), HELL_COLOR)
 hellBtn.TextSize = 18
 
--- MANTIK (LOGIC)
+
 local flying, noclip, esp = false, false, false
 local speed = 70
 
--- Fly
+
 flyBtn.MouseButton1Click:Connect(function()
 	flying = not flying
 	flyBtn.Text = "Uçma: " .. (flying and "AÇIK" or "KAPALI")
@@ -138,7 +137,7 @@ flyBtn.MouseButton1Click:Connect(function()
 	end
 end)
 
--- Noclip
+
 noclipBtn.MouseButton1Click:Connect(function()
 	noclip = not noclip
 	noclipBtn.Text = "Noclip: " .. (noclip and "AÇIK" or "KAPALI")
@@ -151,7 +150,7 @@ rs.Stepped:Connect(function()
 	end
 end)
 
--- ESP
+
 espBtn.MouseButton1Click:Connect(function()
 	esp = not esp
 	espBtn.Text = "ESP: " .. (esp and "AÇIK" or "KAPALI")
@@ -166,11 +165,11 @@ espBtn.MouseButton1Click:Connect(function()
 	end
 end)
 
--- Fling & Message
+
 flingBtn.MouseButton1Click:Connect(function() event:FireServer("Fling", flingInput.Text) end)
 msgBtn.MouseButton1Click:Connect(function() event:FireServer("Message", nil, msgInput.Text) end)
 
--- CEHENNEM TETİKLEYİCİ
+
 hellBtn.MouseButton1Click:Connect(function()
 	event:FireServer("Hell")
 	hellBtn.Text = "YANIYOR!"
@@ -178,7 +177,7 @@ hellBtn.MouseButton1Click:Connect(function()
 	hellBtn.Text = "CEHENNEM MODU"
 end)
 
--- EKRAN MESAJI ALICISI
+
 event.OnClientEvent:Connect(function(type, text)
 	if type == "ShowMessage" then
 		local m = Instance.new("TextLabel", screenGui)
