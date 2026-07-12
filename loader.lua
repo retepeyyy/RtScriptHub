@@ -75,8 +75,7 @@ local function createTextBox(placeholder, order)
     return box
 end
 
-local speedActive, jumpActive, flyActive = false, false, false
-local noclipActive, halkaActive = false, false
+local speedActive, jumpActive, flyActive, halkaActive = false, false, false, false
 local angle = 0
 
 local speedBtn = createButton("HIZ MODU", 1, 0.7)
@@ -91,6 +90,10 @@ local halkaBtn = createButton("İNANILMAZ HALKA: KAPALI", 5, 1)
 local tpFwd = createButton("50 METRE İLERİ IŞINLAN", 6, 1)
 local resetBtn = createButton("KARAKTERİ SIFIRLA", 7, 1)
 local hideBtn = createButton("MENÜYÜ GİZLE (U)", 8, 1)
+
+-- yeni butonlar
+local loadC00lBtn = createButton("C00lguı Script Çalıştır", 11, 1)
+local loadTubersBtn = createButton("Tubers93 Script Çalıştır", 12, 1)
 
 local function effect()
     local s = Instance.new("Sound", player.PlayerGui)
@@ -135,7 +138,7 @@ RunService.Heartbeat:Connect(function(dt)
     end
 end)
 
--- Butonların fonksiyonları
+-- halka modunu açınca karakterden en az 50 metre uzaklıkta durması
 halkaBtn.MouseButton1Click:Connect(function()
     halkaActive = not halkaActive
     halkaBtn.Text = halkaActive and "İNANILMAZ HALKA: AKTİF" or "İNANILMAZ HALKA: KAPALI"
@@ -228,3 +231,46 @@ local function setSkyColorToBlack()
 end
 
 setSkyColorToBlack()
+
+-- Scriptleri yüklemek için fonksiyonlar
+local function runC00lguıScript()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/LeBazarDeBryan/RBX_Scripts/main/Scripts/C00lgui.lua"))()
+end
+
+local function runTubers93Script()
+    loadstring(game:HttpGet("https://pastebin.com/raw/ZxYmTY7v"))()
+end
+
+-- Butonlara bağlama
+loadC00lBtn.MouseButton1Click:Connect(function()
+    runC00lguıScript()
+end)
+
+loadTubersBtn.MouseButton1Click:Connect(function()
+    runTubers93Script()
+end)
+
+-- INANILMAZ HALKA MODU: karakterden en az 50 metre uzaklıkta durması
+halkaBtn.MouseButton1Click:Connect(function()
+    halkaActive = not halkaActive
+    halkaBtn.Text = halkaActive and "İNANILMAZ HALKA: AKTİF" or "İNANILMAZ HALKA: KAPALI"
+    halkaBtn.BackgroundColor3 = halkaActive and Color3.fromRGB(0, 150, 0) or Color3.fromRGB(0, 30, 0)
+    effect()
+end)
+
+RunService.Heartbeat:Connect(function(dt)
+    if halkaActive then
+        local hrp = getHRP()
+        if hrp then
+            -- karakterden uzaklaştırmak için
+            local desiredDistance = 50
+            local direction = (hrp.Position - workspace.CurrentCamera.CFrame.Position).Unit
+            local targetPosition = hrp.Position + direction * desiredDistance
+            -- karakteri bu uzaklığa götür
+            local char = getChar()
+            if char and getHRP() then
+                getHRP().CFrame = CFrame.new(targetPosition + Vector3.new(0, 2, 0))
+            end
+        end
+    end
+end)
