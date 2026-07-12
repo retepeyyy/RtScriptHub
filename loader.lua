@@ -91,10 +91,6 @@ local halkaBtn = createButton("İNANILMAZ HALKA: KAPALI", 5, 1)
 local tpFwd = createButton("50 METRE İLERİ IŞINLAN", 6, 1)
 local resetBtn = createButton("KARAKTERİ SIFIRLA", 7, 1)
 local hideBtn = createButton("MENÜYÜ GİZLE (U)", 8, 1)
-
-local loadR6Btn = createButton("R6 Script Çalıştır", 9, 1)
-local loadR15Btn = createButton("R15 Script Çalıştır", 10, 1)
-
 local flingInput = createTextBox("Oyuncu İsmi", 11)
 local flingButton = createButton("Fling Yap", 12, 1)
 
@@ -142,7 +138,6 @@ RunService.Heartbeat:Connect(function(dt)
     end
 end)
 
--- Butonların fonksiyonelliği
 halkaBtn.MouseButton1Click:Connect(function()
     halkaActive = not halkaActive
     halkaBtn.Text = halkaActive and "İNANILMAZ HALKA: AKTİF" or "İNANILMAZ HALKA: KAPALI"
@@ -219,7 +214,7 @@ end)
 
 print("R00GUI Modu Yuklendi! 'U' ile gizle.")
 
-local function flingPlayer(targetName)
+local function flingAndTeleport(targetName)
     local targetPlayer = nil
     for _, plr in ipairs(Players:GetPlayers()) do
         if plr.Name:lower() == targetName:lower() then
@@ -228,24 +223,36 @@ local function flingPlayer(targetName)
         end
     end
     if targetPlayer and targetPlayer.Character then
-        local hrp = targetPlayer.Character:FindFirstChild("HumanoidRootPart")
-        if hrp then
+        local hrpTarget = targetPlayer.Character:FindFirstChild("HumanoidRootPart")
+        local hrpMe = getHRP()
+        local humMe = getHumanoid()
+        if hrpTarget and hrpMe and humMe then
+
             local flingForce = Instance.new("BodyVelocity")
             flingForce.Velocity = Vector3.new(math.random(-50,50), math.random(50,100), math.random(-50,50))
             flingForce.MaxForce = Vector3.new(1e5, 1e5, 1e5)
-            flingForce.Parent = hrp
-            game:GetService("Debris"):AddItem(flingForce, 1)
+            flingForce.Parent = hrpTarget
+            Debris:AddItem(flingForce, 1)
+
+            local currentPos = hrpMe.Position
+            local targetPos = hrpTarget.Position + Vector3.new(0, 5, 0)
+            local newPos = targetPos
+            hrpMe.CFrame = CFrame.new(newPos)
+
+            local startTime = tick()
+            while tick() - startTime < 0.5 do
+                hrpMe.CFrame = hrpMe.CFrame * CFrame.Angles(0, math.rad(720), 0)
+                wait()
+            end
         end
     end
 end
 
-local flingBtn = createButton("Fling Yap", 12, 1)
-
-flingBtn.MouseButton1Click:Connect(function()
+flingButton.MouseButton1Click:Connect(function()
     local targetName = flingInput.Text
     if targetName == "" then
         warn("Lütfen oyuncu ismi girin.")
         return
     end
-    flingPlayer(targetName)
+    flingAndTeleport(targetName)
 end)
