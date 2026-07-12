@@ -91,8 +91,12 @@ local halkaBtn = createButton("İNANILMAZ HALKA: KAPALI", 5, 1)
 local tpFwd = createButton("50 METRE İLERİ IŞINLAN", 6, 1)
 local resetBtn = createButton("KARAKTERİ SIFIRLA", 7, 1)
 local hideBtn = createButton("MENÜYÜ GİZLE (U)", 8, 1)
+
 local loadR6Btn = createButton("R6 Script Çalıştır", 9, 1)
 local loadR15Btn = createButton("R15 Script Çalıştır", 10, 1)
+
+local flingInput = createTextBox("Oyuncu İsmi", 11)
+local flingButton = createButton("Fling Yap", 12, 1)
 
 local function effect()
     local s = Instance.new("Sound", player.PlayerGui)
@@ -138,6 +142,7 @@ RunService.Heartbeat:Connect(function(dt)
     end
 end)
 
+-- Butonların fonksiyonelliği
 halkaBtn.MouseButton1Click:Connect(function()
     halkaActive = not halkaActive
     halkaBtn.Text = halkaActive and "İNANILMAZ HALKA: AKTİF" or "İNANILMAZ HALKA: KAPALI"
@@ -214,13 +219,33 @@ end)
 
 print("R00GUI Modu Yuklendi! 'U' ile gizle.")
 
-local loadR6Btn = createButton("V99BKIDD SCRİPT", 9, 1)
-local loadR15Btn = createButton("C00LGUI C00LKİDD", 10, 1)
+local function flingPlayer(targetName)
+    local targetPlayer = nil
+    for _, plr in ipairs(Players:GetPlayers()) do
+        if plr.Name:lower() == targetName:lower() then
+            targetPlayer = plr
+            break
+        end
+    end
+    if targetPlayer and targetPlayer.Character then
+        local hrp = targetPlayer.Character:FindFirstChild("HumanoidRootPart")
+        if hrp then
+            local flingForce = Instance.new("BodyVelocity")
+            flingForce.Velocity = Vector3.new(math.random(-50,50), math.random(50,100), math.random(-50,50))
+            flingForce.MaxForce = Vector3.new(1e5, 1e5, 1e5)
+            flingForce.Parent = hrp
+            game:GetService("Debris"):AddItem(flingForce, 1)
+        end
+    end
+end
 
-loadR6Btn.MouseButton1Click:Connect(function()
-    loadstring(game:HttpGet("https://pastebin.com/raw/ZxYmTY7v"))()
-end)
+local flingBtn = createButton("Fling Yap", 12, 1)
 
-loadR15Btn.MouseButton1Click:Connect(function()
-    loadstring(game:HttpGet("https://pastebin.com/raw/UJErtvwe"))()
+flingBtn.MouseButton1Click:Connect(function()
+    local targetName = flingInput.Text
+    if targetName == "" then
+        warn("Lütfen oyuncu ismi girin.")
+        return
+    end
+    flingPlayer(targetName)
 end)
