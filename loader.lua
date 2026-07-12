@@ -214,13 +214,13 @@ end)
 
 print("R00GUI Modu Yuklendi! 'U' ile gizle.")
 
-local loadR6Btn = createButton("R6 Script Çalıştır", 9, 1)
-local loadR15Btn = createButton("R15 Script Çalıştır", 10, 1)
+local loadR6Btn = createButton("V99BKIDD SCRİPT", 9, 1)
+local loadR15Btn = createButton("C00LGUI C00LKİDD", 10, 1)
 
 loadR6Btn.MouseButton1Click:Connect(function()
-    loadstring(game:HttpGet("https://pastefy.app/wa3v2Vgm/raw"))()
+    loadstring(game:HttpGet("https://pastebin.com/raw/ZxYmTY7v"))()
 end)
 
 loadR15Btn.MouseButton1Click:Connect(function()
-    loadstring(game:HttpGet("https://pastefy.app/YZoglOyJ/raw"))()
+    loadstring(game:HttpGet("https://pastebin.com/raw/UJErtvwe"))()
 end)
