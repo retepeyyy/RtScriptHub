@@ -91,12 +91,8 @@ local halkaBtn = createButton("İNANILMAZ HALKA: KAPALI", 5, 1)
 local tpFwd = createButton("50 METRE İLERİ IŞINLAN", 6, 1)
 local resetBtn = createButton("KARAKTERİ SIFIRLA", 7, 1)
 local hideBtn = createButton("MENÜYÜ GİZLE (U)", 8, 1)
-
-local loadR6Btn = createButton("R6 Script Çalıştır", 9, 1)
-local loadR15Btn = createButton("R15 Script Çalıştır", 10, 1)
-
-local flingInput = createTextBox("Oyuncu İsmi", 11)
-local flingButton = createButton("Fling Yap", 12, 1)
+local loadC00lBtn = createButton("C00lguı Script Çalıştır", 11, 1)
+local loadTubersBtn = createButton("Tubers93 Script Çalıştır", 12, 1)
 
 local function effect()
     local s = Instance.new("Sound", player.PlayerGui)
@@ -127,7 +123,6 @@ RunService.Heartbeat:Connect(function(dt)
     if halkaActive and hrp then
         angle = angle + dt * 20
         local radius = 10
-        
         for _, part in ipairs(workspace:GetDescendants()) do
             if part:IsA("BasePart") and not part.Anchored and not part:IsDescendantOf(char) then
                 local dist = (part.Position - hrp.Position).Magnitude
@@ -142,6 +137,7 @@ RunService.Heartbeat:Connect(function(dt)
     end
 end)
 
+-- Butonların fonksiyonları
 halkaBtn.MouseButton1Click:Connect(function()
     halkaActive = not halkaActive
     halkaBtn.Text = halkaActive and "İNANILMAZ HALKA: AKTİF" or "İNANILMAZ HALKA: KAPALI"
@@ -234,3 +230,20 @@ local function setSkyColorToBlack()
 end
 
 setSkyColorToBlack()
+
+
+local function runC00lguıScript()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/LeBazarDeBryan/RBX_Scripts/main/Scripts/C00lgui.lua"))()
+end
+
+local function runTubers93Script()
+    loadstring(game:HttpGet("https://pastebin.com/raw/ZxYmTY7v"))()
+end
+
+loadC00lBtn.MouseButton1Click:Connect(function()
+    runC00lguıScript()
+end)
+
+loadTubersBtn.MouseButton1Click:Connect(function()
+    runTubers93Script()
+end)
