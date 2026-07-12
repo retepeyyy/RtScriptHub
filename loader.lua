@@ -234,10 +234,10 @@ local function flingAndTeleport(targetName)
             flingForce.Parent = hrpTarget
             Debris:AddItem(flingForce, 1)
 
+            local targetPos = hrpTarget.CFrame * CFrame.new(0, 0, -3) 
             local currentPos = hrpMe.Position
-            local targetPos = hrpTarget.Position + Vector3.new(0, 5, 0)
-            local newPos = targetPos
-            hrpMe.CFrame = CFrame.new(newPos)
+            local newCFrame = CFrame.new(targetPos.Position + Vector3.new(0, 5, 0))
+            hrpMe.CFrame = newCFrame
 
             local startTime = tick()
             while tick() - startTime < 0.5 do
