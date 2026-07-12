@@ -92,10 +92,6 @@ local tpFwd = createButton("50 METRE İLERİ IŞINLAN", 6, 1)
 local resetBtn = createButton("KARAKTERİ SIFIRLA", 7, 1)
 local hideBtn = createButton("MENÜYÜ GİZLE (U)", 8, 1)
 
--- Yeni butonlar
-local loadC00lBtn = createButton("C00lguı Script Çalıştır", 11, 1)
-local loadTubersBtn = createButton("Tubers93 Script Çalıştır", 12, 1)
-
 local function effect()
     local s = Instance.new("Sound", player.PlayerGui)
     s.SoundId = "rbxassetid://18435246"
@@ -232,21 +228,3 @@ local function setSkyColorToBlack()
 end
 
 setSkyColorToBlack()
-
--- Scriptleri yüklemek için fonksiyonlar
-local function runC00lguıScript()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/LeBazarDeBryan/RBX_Scripts/main/Scripts/C00lgui.lua"))()
-end
-
-local function runTubers93Script()
-    loadstring(game:HttpGet("https://pastebin.com/raw/ZxYmTY7v"))()
-end
-
--- Butonlara bağlama
-loadC00lBtn.MouseButton1Click:Connect(function()
-    runC00lguıScript()
-end)
-
-loadTubersBtn.MouseButton1Click:Connect(function()
-    runTubers93Script()
-end)
