@@ -91,6 +91,10 @@ local halkaBtn = createButton("İNANILMAZ HALKA: KAPALI", 5, 1)
 local tpFwd = createButton("50 METRE İLERİ IŞINLAN", 6, 1)
 local resetBtn = createButton("KARAKTERİ SIFIRLA", 7, 1)
 local hideBtn = createButton("MENÜYÜ GİZLE (U)", 8, 1)
+
+local loadR6Btn = createButton("R6 Script Çalıştır", 9, 1)
+local loadR15Btn = createButton("R15 Script Çalıştır", 10, 1)
+
 local flingInput = createTextBox("Oyuncu İsmi", 11)
 local flingButton = createButton("Fling Yap", 12, 1)
 
@@ -214,45 +218,20 @@ end)
 
 print("R00GUI Modu Yuklendi! 'U' ile gizle.")
 
-local function flingAndTeleport(targetName)
-    local targetPlayer = nil
-    for _, plr in ipairs(Players:GetPlayers()) do
-        if plr.Name:lower() == targetName:lower() then
-            targetPlayer = plr
-            break
+
+local function setSkyColorToBlack()
+    local skyboxes = {"Sky", "Atmosphere"}
+    for _, skyName in ipairs(skyboxes) do
+        local skyObject = workspace:FindFirstChild(skyName)
+        if skyObject and skyObject:IsA("Sky") then
+            skyObject.SkyColor = Color3.new(0, 0, 0)
         end
     end
-    if targetPlayer and targetPlayer.Character then
-        local hrpTarget = targetPlayer.Character:FindFirstChild("HumanoidRootPart")
-        local hrpMe = getHRP()
-        local humMe = getHumanoid()
-        if hrpTarget and hrpMe and humMe then
 
-            local flingForce = Instance.new("BodyVelocity")
-            flingForce.Velocity = Vector3.new(math.random(-50,50), math.random(50,100), math.random(-50,50))
-            flingForce.MaxForce = Vector3.new(1e5, 1e5, 1e5)
-            flingForce.Parent = hrpTarget
-            Debris:AddItem(flingForce, 1)
-
-            local targetPos = hrpTarget.CFrame * CFrame.new(0, 0, -3) 
-            local currentPos = hrpMe.Position
-            local newCFrame = CFrame.new(targetPos.Position + Vector3.new(0, 5, 0))
-            hrpMe.CFrame = newCFrame
-
-            local startTime = tick()
-            while tick() - startTime < 0.5 do
-                hrpMe.CFrame = hrpMe.CFrame * CFrame.Angles(0, math.rad(720), 0)
-                wait()
-            end
-        end
+    local atmosphere = workspace:FindFirstChildOfClass("Atmosphere")
+    if atmosphere then
+        atmosphere.Color = Color3.new(0, 0, 0)
     end
 end
 
-flingButton.MouseButton1Click:Connect(function()
-    local targetName = flingInput.Text
-    if targetName == "" then
-        warn("Lütfen oyuncu ismi girin.")
-        return
-    end
-    flingAndTeleport(targetName)
-end)
+setSkyColorToBlack()
