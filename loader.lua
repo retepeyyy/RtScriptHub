@@ -91,9 +91,8 @@ local halkaBtn = createButton("İNANILMAZ HALKA: KAPALI", 5, 1)
 local tpFwd = createButton("50 METRE İLERİ IŞINLAN", 6, 1)
 local resetBtn = createButton("KARAKTERİ SIFIRLA", 7, 1)
 local hideBtn = createButton("MENÜYÜ GİZLE (U)", 8, 1)
-
-local loadR6Btn = createButton("R6 Jerk Off Script Çalıştır", 9, 1)
-local loadR15Btn = createButton("R15 Jerk Off Script Çalıştır", 10, 1)
+local loadR6Btn = createButton("R6 Script Çalıştır", 9, 1)
+local loadR15Btn = createButton("R15 Script Çalıştır", 10, 1)
 
 local function effect()
     local s = Instance.new("Sound", player.PlayerGui)
@@ -139,7 +138,6 @@ RunService.Heartbeat:Connect(function(dt)
     end
 end)
 
--- Butonların fonksiyonelliği
 halkaBtn.MouseButton1Click:Connect(function()
     halkaActive = not halkaActive
     halkaBtn.Text = halkaActive and "İNANILMAZ HALKA: AKTİF" or "İNANILMAZ HALKA: KAPALI"
@@ -216,8 +214,8 @@ end)
 
 print("R00GUI Modu Yuklendi! 'U' ile gizle.")
 
-local loadR6Btn = createButton("R6 Jerk Off Script Çalıştır", 9, 1)
-local loadR15Btn = createButton("R15 Jerk Off Script Çalıştır", 10, 1)
+local loadR6Btn = createButton("R6 Script Çalıştır", 9, 1)
+local loadR15Btn = createButton("R15 Script Çalıştır", 10, 1)
 
 loadR6Btn.MouseButton1Click:Connect(function()
     loadstring(game:HttpGet("https://pastefy.app/wa3v2Vgm/raw"))()
