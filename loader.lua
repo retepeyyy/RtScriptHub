@@ -218,7 +218,6 @@ end)
 
 print("R00GUI Modu Yuklendi! 'U' ile gizle.")
 
-
 local function setSkyColorToBlack()
     local skyboxes = {"Sky", "Atmosphere"}
     for _, skyName in ipairs(skyboxes) do
@@ -227,7 +226,7 @@ local function setSkyColorToBlack()
             skyObject.SkyColor = Color3.new(0, 0, 0)
         end
     end
-
+    
     local atmosphere = workspace:FindFirstChildOfClass("Atmosphere")
     if atmosphere then
         atmosphere.Color = Color3.new(0, 0, 0)
